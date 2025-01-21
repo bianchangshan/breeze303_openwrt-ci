@@ -1,7 +1,17 @@
 #!/bin/bash
+# 修改 WAN 配置为 PPPoE，并设置 MTU（我自己添加的）
+cat <<EOF > files/etc/config/network
+config interface 'wan'
+    option ifname 'wan'  # 设置 PPPoE 拨号接口
+    option proto 'pppoe'
+    option username '053901299887'  # 你的 PPPoE 用户名
+    option password '123456'  # 你的 PPPoE 密码
+    option mtu '1482'  # 设置 PPPoE 拨号的 MTU 为 1482
+EOF
+
 
 # 修改默认IP
-# sed -i 's/192.168.1.1/10.0.0.1/g' package/base-files/files/bin/config_generate
+sed -i 's/192.168.1.1/172.16.1.1/g' package/base-files/files/bin/config_generate
 
 # 更改默认 Shell 为 zsh
 # sed -i 's/\/bin\/ash/\/usr\/bin\/zsh/g' package/base-files/files/etc/passwd
